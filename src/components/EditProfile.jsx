@@ -21,6 +21,7 @@ const EditProfile = ({user}) => {
 
 
         const saveProfile= async() =>{
+            setError("");
             try {
                 const res=await axios.patch(BASE_URL + "/profile/edit",{firstName,lastName,photoUrl,age,gender,about},{withCredentials:true});
                 dispatch(addUser(res?.data?.data))
@@ -83,7 +84,7 @@ const EditProfile = ({user}) => {
                             <span className="label-text">Age</span>
                         </div>
                         <input
-                             type="text" 
+                             type="number"
                              value={age}
                              className="input input-bordered w-full max-w-xs" 
                              onChange={(e)=>setAge(e.target.value)}
