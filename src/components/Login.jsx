@@ -7,8 +7,11 @@ import { BASE_URL } from "../utils/constants.JS";
 
 
 const Login = () => {
-    const[email, setEmail] = useState("rakesh123@gmail.com");
-    const[password, setPassword] = useState("Rakesh@2002");
+    const[email, setEmail] = useState("");
+    const[password, setPassword] = useState("");
+    const[firstName, setFirstName]=useState("")
+    const[lastName, setLastName]=useState("")
+    const[isLoginForm, setIsLoginForm]= useState(true)
     const[error, setError] = useState();
 
     const dispatch=useDispatch();
@@ -30,13 +33,47 @@ const Login = () => {
             
         }
     }
+
+    const handleSignUp = async () =>{
+        try {
+            const res=await axios.post(BASE_URL + "/signup",{firstName, lastName, email, password},{withCredentials:true})
+            dispatch(addUser(res.data.data))
+            return navigate("/profile")
+        } catch (error) {
+            console.error(error)
+        }
+    }
   return (
     <div className="flex justify-center my-10">
         <div className="card bg-base-300 w-96 shadow-xl ">
             <div className="card-body">
-                <h2 className="card-title flex justify-center font-bold">Login</h2>
+                <h2 className="card-title flex justify-center font-bold">{isLoginForm ? "Login" :"Sign Up"}</h2>
                 <div>
+                { !isLoginForm && (<>
+                <label className="form-control w-full max-w-xs ">
+                        <div className="label">
+                            <span className="label-text">First Name </span>
+                        </div>
+                        <input 
+                            type="text" 
+                            value={firstName}
+                            className="input input-bordered w-full max-w-xs" 
+                            onChange={(e)=>setFirstName(e.target.value)}
+                        />
+                    </label>
                     <label className="form-control w-full max-w-xs ">
+                        <div className="label">
+                            <span className="label-text">Last Name </span>
+                        </div>
+                        <input 
+                            type="text" 
+                            value={lastName}
+                            className="input input-bordered w-full max-w-xs" 
+                            onChange={(e)=>setLastName(e.target.value)}
+                        />
+                    </label>
+                    </>)}
+                    <label className="form-control w-full max-w-xs "> 
                         <div className="label">
                             <span className="label-text">Email </span>
                         </div>
@@ -61,8 +98,9 @@ const Login = () => {
                 </div>
                 <p className="text-red-500">{error}</p>
                 <div className="card-actions justify-center ">
-                    <button className="btn btn-primary" onClick={handleLogin}>Submit</button>
+                    <button className="btn btn-primary" onClick={isLoginForm ? handleLogin : handleSignUp}>{isLoginForm ? "Login" : "Sign Up"}</button>
                 </div>
+                <p className="m-auto" onClick={()=>setIsLoginForm((user)=>!user)}>{isLoginForm ? "New User? Sign Up here" :"Existing user? Login here"}</p>
             </div>
         </div>
 
@@ -70,4 +108,6 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Login;
+
+

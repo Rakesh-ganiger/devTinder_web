@@ -7,8 +7,9 @@ import axios from "axios";
 import { removeuserFromFeed } from "../utils/feedSlice";
 
 const UserCard = ({user}) => {
-   
+    
     const {_id,firstName,lastName, photourl,age,gender,about}=user;
+    // console.log(user)
     const dispatch= useDispatch();
     
 
@@ -23,13 +24,18 @@ const UserCard = ({user}) => {
       }
 
     }
+    
    
   return (
     <div className="card bg-base-300 w-96 shadow-xl">
   <figure className="py-3 ">
-    <img className="rounded-md"
-      src={photourl}
-      alt="Shoes" />
+  <img 
+  className="rounded-md"
+  src={photourl || "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"}
+  onError={(e) => e.target.src = "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"}
+  alt="User Profile"
+/>
+
   </figure>
   <div className="card-body">
     <h2 className="card-title">{firstName + " " + lastName } </h2>

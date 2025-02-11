@@ -27,7 +27,7 @@ const Navbar = () => {
   return (
     <div className="navbar bg-base-300">
   <div className="flex-1">
-    <Link to="/" className="btn btn-ghost text-xl">dev Tinder</Link>
+    <Link to="/" className="btn btn-ghost text-xl"> 🚀 dev Tinder</Link>
   </div>
  { user && <div className="flex-none gap-2">
     <div className="form-control"> welcome {user.firstName}</div>
@@ -35,9 +35,16 @@ const Navbar = () => {
       
       <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
         <div className="w-10 rounded-full">
-          <img
+          {/* <img
             alt="Tailwind CSS Navbar component"
-            src={user.photoUrl} />
+            src={user.photoUrl} /> */}
+
+<img 
+  className="w-20 h-20 rounded-full"
+  src={user.photourl || "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"}
+  onError={(e) => e.target.src = "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"}
+  alt="User Profile"
+/>
         </div>
       </div>
       <ul

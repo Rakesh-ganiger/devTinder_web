@@ -1,6 +1,4 @@
-/* eslint-disable react/jsx-key */
-// /* eslint-disable no-unused-vars */
-// /* eslint-disable react/jsx-key */
+
 import axios from "axios"
 import { BASE_URL } from "../utils/constants"
 import { useEffect } from "react";
@@ -15,6 +13,7 @@ const Connections = () => {
       const res = await axios.get(BASE_URL + "/user/connections", {
         withCredentials: true,
       });
+      console.log(res)
       dispatch(addConnections(res.data.data));
     } catch (err) {
       // Handle Error Case
@@ -28,7 +27,7 @@ const Connections = () => {
 
   if (!connections) return;
 
-  if (connections.length === 0) return <h1> No Connections Found</h1>;
+  if (connections.length === 0) return <h1 className="flex justify-center my-10 font-bold"> No Connections Found</h1>;
 
   return (
     <div className="text-center my-10">
@@ -41,11 +40,20 @@ const Connections = () => {
         return (
           <div key={_id} className=" flex m-4 p-4 rounded-lg bg-base-300 w-1/2 mx-auto">
             <div>
-              <img
+
+             {/* {photourl && ( <img
                 alt="photo"
                 className="w-20 h-20 rounded-full"
                 src={photourl}
-              />
+              />)} */}
+
+<img 
+  className="w-20 h-20 rounded-full"
+  src={photourl || "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"}
+  onError={(e) => e.target.src = "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"}
+  alt="User Profile"
+/>
+              
             </div>
             <div className="text-left mx-4 ">
               <h2 className="font-bold text-xl">
@@ -63,48 +71,3 @@ const Connections = () => {
 export default Connections;
 
 
-
-// const Connections = () => {
-//     const dispatch= useDispatch();
-//     const connections = useSelector((store) => store.connections)
-    
-//     const fetchConnections= async () =>{
-//         try {
-//             const res=await axios.get(BASE_URL +"/user/connections",{withCredentials:true});
-            
-//             dispatch(addConnections(res.data))
-
-        
-        
-//         } catch (error) {
-//             console.error(error)
-            
-//         }
-//     }
-//     useEffect(()=>{
-//         fetchConnections();
-
-//     },[])
-    
-//     if(!connections) return;
-
-//     if(connections.length === 0) return ;
-
-//      return (
-//     <div className="flex justify-center my-10">
-//     <h2 className="text-bold text-2xl">Connections</h2>
-//     {connections.map((connection) => {
-//         const { firstName, lastName, photourl } = connection;
-
-//         return (
-//             <div key={firstName + lastName}>
-//                 <img src={photourl} className="h-20 w-20" alt="profile" />
-//                 <h1>{`${firstName} ${lastName}`}</h1>
-//             </div>
-//         );
-//     })}
-// </div>
-// );
-// }
-
-// export default Connections;
